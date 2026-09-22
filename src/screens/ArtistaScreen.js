@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { buscarArtistasPorGenero } from "../services/artista";
 
 export default function ArtistaScreen({ route }) {
     const { genreId, genreName } = route.params;
@@ -15,8 +16,7 @@ export default function ArtistaScreen({ route }) {
 
                 console.log(`Buscando artistas para o gênero: ${genreName} (ID: ${genreId})`);
 
-                const res = await fetch(`https://api.deezer.com/genre/${genreId}/artists`);
-                const data = await res.json();
+                const data = await buscarArtistasPorGenero(genreId);
 
                 // Verifica se a API retornou um array de dados válido
                 if (data && data.data && data.data.length > 0) {
