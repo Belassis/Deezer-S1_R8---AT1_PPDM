@@ -1,4 +1,4 @@
-const API_URL = 'https://developers.deezer.com/api';
+const API_URL = 'https://corsproxy.io/?https://api.deezer.com';
 
 export const fetchDeezerData = async (endpoint) => {
   try {

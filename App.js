@@ -6,7 +6,7 @@ import HomeScreen from './src/screens/HomeScreen';
 import GeneroScreen from './src/screens/GeneroScreen';
 import ArtistaScreen from './src/screens/ArtistaScreen';
 
-const Stack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator(); //Funciona como se fosse uma sobreposição de telas
 
 export default function App() {
   return (

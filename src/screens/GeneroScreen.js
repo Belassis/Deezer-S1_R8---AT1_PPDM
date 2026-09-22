@@ -38,8 +38,8 @@ export default function GeneroScreen({ navigation }) {
             <Text style={styles.headerTitle}>Gêneros Musicais</Text>
             <FlatList
                 data={generos}
-                keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => (
+                keyExtractor={(item) => item.id.toString()} //Define uma chave única para cada item da lista, como se identificasse cada um deles,mas um de cada vez. 
+                renderItem={({ item }) => ( //Parte visual de acorod com a api como vai ser. 
                     <TouchableOpacity
                         style={styles.card}
                         onPress={() =>
@@ -49,17 +49,17 @@ export default function GeneroScreen({ navigation }) {
                             })
                         }
                     >
-                        {/* Informação 1: Imagem/Capa do gênero */}
+                        {/*Imagem/Capa do gênero*/}
                         <Image
                             source={{ uri: item.picture_medium }}
                             style={styles.image}
                         />
 
                         <View style={styles.info}>
-                            {/* Informação 2: Nome do gênero */}
+                            {/*Nome do gênero*/}
                             <Text style={styles.name}>{item.name}</Text>
 
-                            {/* Informação 3: ID do registro na API */}
+                            {/*ID do registro na API*/}
                             <Text style={styles.genreId}>
                                 ID do Gênero: {item.id}
                             </Text>
@@ -76,7 +76,7 @@ export default function GeneroScreen({ navigation }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F6F7F8",
+        backgroundColor: "#000000",
         padding: 16
     },
     center: {
@@ -88,17 +88,17 @@ const styles = StyleSheet.create({
         fontSize: 24,
         fontWeight: "bold",
         marginBottom: 16,
-        color: "#18211B"
+        color: "#A238FF"
     },
     card: {
         flexDirection: "row",
-        backgroundColor: "#FFF",
+        backgroundColor: "#000000",
         borderRadius: 12,
         padding: 12,
         marginBottom: 12,
         alignItems: "center",
         borderWidth: 1,
-        borderColor: "#E4E8E5",
+        borderColor: "#A238FF",
     },
     image: {
         width: 60,
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 18,
         fontWeight: "bold",
-        color: "#18211B"
+        color: "#ffffff"
     },
     genreId: {
         fontSize: 13,

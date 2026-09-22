@@ -10,18 +10,31 @@ export default function ArtistaScreen({ route }) {
     useEffect(() => {
         const buscarArtistas = async () => {
             try {
+                setLoading(true);
+                setArtistas([]); // Limpa a lista anterior antes de buscar novos dados
+
+                console.log(`Buscando artistas para o gênero: ${genreName} (ID: ${genreId})`);
+
                 const res = await fetch(`https://api.deezer.com/genre/${genreId}/artists`);
                 const data = await res.json();
 
-                setArtistas(data.data);
+                // Verifica se a API retornou um array de dados válido
+                if (data && data.data && data.data.length > 0) {
+                    setArtistas(data.data);
+                } else {
+                    setArtistas([]);
+                }
             } catch (error) {
-                console.error(error);
+                console.error("Erro ao buscar artistas da API:", error);
+                setArtistas([]);
             } finally {
                 setLoading(false);
             }
         };
 
-        buscarArtistas();
+        if (genreId) {
+            buscarArtistas();
+        }
     }, [genreId]);
 
     if (loading) {
@@ -38,21 +51,28 @@ export default function ArtistaScreen({ route }) {
                 Artistas de {genreName}
             </Text>
 
-            <FlatList
-                data={artists}
-                renderItem={({ item }) => (
-                    <View style={styles.card}>
-                        <Image
-                            source={{ uri: item.picture_medium }}
-                            style={styles.avatar}
-                        />
+            {artists.length === 0 ? (
+                <View style={styles.center}>
+                    <Text style={styles.emptyText}>Nenhum artista encontrado para este gênero.</Text>
+                </View>
+            ) : (
+                <FlatList
+                    data={artists}
+                    keyExtractor={(item) => item.id.toString()}
+                    renderItem={({ item }) => (
+                        <View style={styles.card}>
+                            <Image
+                                source={{ uri: item.picture_medium }}
+                                style={styles.avatar}
+                            />
 
-                        <View style={styles.info}>
-                            <Text style={styles.name}>{item.name}</Text>
+                            <View style={styles.info}>
+                                <Text style={styles.name}>{item.name}</Text>
+                            </View>
                         </View>
-                    </View>
-                )}
-            />
+                    )}
+                />
+            )}
         </SafeAreaView>
     );
 }
@@ -60,7 +80,7 @@ export default function ArtistaScreen({ route }) {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#F6F7F8",
+        backgroundColor: "#000000",
         padding: 16
     },
 
@@ -74,18 +94,24 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: "bold",
         marginBottom: 16,
-        color: "#18211B"
+        color: "#A238FF"
+    },
+
+    emptyText: {
+        fontSize: 16,
+        color: "#66706A",
+        textAlign: "center"
     },
 
     card: {
         flexDirection: "row",
-        backgroundColor: "#FFF",
+        backgroundColor: "#000000",
         borderRadius: 12,
         padding: 12,
         marginBottom: 12,
         alignItems: "center",
         borderWidth: 1,
-        borderColor: "#E4E8E5"
+        borderColor: "#A238FF"
     },
 
     avatar: {
@@ -101,6 +127,6 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 18,
         fontWeight: "bold",
-        color: "#18211B"
+        color: "#ffffff"
     }
 });
